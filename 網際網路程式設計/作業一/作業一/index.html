@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 林彥碩 - 個人網站</title>
+    <style>
+        /* 全局樣式 */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 常用字體，無襯線 */
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6; /* 淡灰色背景 */
+            color: #333; /* 主要文字顏色 */
+            text-align: center; /* 所有內容居中 */
+        }
+
+        /* 頁首樣式 */
+        header {
+            background-color: #2196F3; /* 亮綠色背景 */
+            color: white; /* 文字顏色 */
+            padding: 40px 20px;
+            border-radius: 8px; /* 圓角 */
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+        }
+
+        header img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%; /* 讓圖片變成圓形 */
+            object-fit: cover; /* 確保圖片填充圓形區域 */
+            border: 5px solid white; /* 白色邊框 */
+            margin-bottom: 15px;
+        }
+
+        header h1 {
+            margin: 10px 0;
+            font-size: 2.8em; /* 標題字體大小 */
+            letter-spacing: 1.5px; /* 字距 */
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* 區塊樣式 */
+        section {
+            background-color: #ffffff; /* 白色背景 */
+            padding: 30px;
+            margin: 25px auto; /* 區塊上下間距與左右自動居中 */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+            max-width: 800px; /* 限制區塊最大寬度 */
+            text-align: left; /* 區塊內文字靠左對齊 */
+        }
+
+        section h2 {
+            color: #3f51b5; /* 藍色標題 */
+            border-bottom: 2px solid #e0e0e0; /* 底部細線 */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        section h3 {
+            color: #607d8b; /* 深灰色標題 */
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        /* 列表樣式 */
+        ul {
+            list-style-type: none; /* 移除預設點點 */
+            padding: 0;
+            margin: 0;
+        }
+
+        ul li {
+            background-color: #e8f5e9; /* 淺綠色背景 */
+            margin-bottom: 8px;
+            padding: 10px 15px;
+            border-left: 5px solid #66bb6a; /* 左側綠色邊條 */
+            border-radius: 4px;
+            color: #333;
+        }
+
+        /* 按鈕樣式 */
+        button {
+            background-color: #f44336; /* 紅色按鈕 */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease; /* 平滑過渡效果 */
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #d32f2f; /* 滑鼠懸停時變深 */
+        }
+
+        /* 連結樣式 */
+        a {
+            color: #2196F3; /* 藍色連結 */
+            text-decoration: none; /* 移除底線 */
+        }
+
+        a:hover {
+            text-decoration: underline; /* 滑鼠懸停時顯示底線 */
+        }
+
+        /* 頁腳樣式 */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #333; /* 深灰色背景 */
+            color: #ddd; /* 淺灰色文字 */
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="myphoto.jpg" alt="你的個人照片" width="150" height="150">
+        <h1>林彥碩</h1>
+        <p>國立臺灣師範大學 科技系 學生</p>
+    </header>
+
+    <hr style="border: none; border-top: 1px solid #eee; width: 60%; margin: 30px auto;">
+
+    <section id="about">
+        <h2>關於我</h2>
+        <p>在這裡寫下你的自我介紹、興趣、熱情或個人故事。試著讓內容更生動有趣。</p>
+        <p>例如：我熱愛網頁設計，擅長將複雜的想法轉化為簡潔且流暢的網頁介面。對我來說，設計不只是一門技術，更是解決問題的藝術。</p>
+        
+        <h3>我的專業技能</h3>
+        <ul>
+            <li>技能一：HTML5 / CSS3 / JavaScript</li>
+            <li>技能二：Figma / Adobe XD</li>
+            <li>技能三：...(其他技能)</li>
+        </ul>
+
+        <a href="你的作品集網址" target="_blank">
+            <button>我的作品集</button>
+        </a>
+    </section>
+
+    <hr style="border: none; border-top: 1px solid #eee; width: 60%; margin: 30px auto;">
+
+    <section id="contact">
+        <h2>聯絡我</h2>
+        <p>歡迎透過以下方式與我聯繫！</p>
+        <ul>
+            <li>Email: <a href="mailto:413711114h@gapps.ntnu.edu.tw">你的Email@example.com</a></li>
+            <li>LinkedIn: <a href="你的LinkedIn網址" target="_blank">你的 LinkedIn</a></li>
+            <li>GitHub: <a href="https://github.com/LinYenShou" target="_blank">你的 GitHub</a></li>
+        </ul>
+    </section>
+
+    <hr style="border: none; border-top: 1px solid #eee; width: 60%; margin: 30px auto;">
+
+    <footer>
+        <p>&copy; 2025 個人網站. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
