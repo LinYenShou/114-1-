@@ -5,169 +5,435 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> 林彥碩 - 個人網站</title>
     <style>
+        /* CSS 變數：定義整個網站的配色和字體 */
+        :root {
+            --color-dark-bg: #0A0A0A; /* 極深黑色背景 */
+            --color-light-bg: #1B1B1B; /* 區塊深灰背景 */
+            --color-text-primary: #E0E0E0; /* 主要文字淡灰 */
+            --color-text-secondary: #AAAAAA; /* 次要文字淡灰 */
+            --color-blue-primary: #00A6FF; /* 醒目科技藍 */
+            --color-blue-accent: #0077B6; /* 藍色懸停/強調 */
+            --font-code: 'Consolas', 'Menlo', monospace; /* 程式碼風格字體 */
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 主要內容字體 */
+        }
+
+        /* 關鍵幀動畫：頭像光暈呼吸 */
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 10px rgba(0, 166, 255, 0.6), 0 0 0 rgba(0, 166, 255, 0); }
+            50% { box-shadow: 0 0 25px rgba(0, 166, 255, 1), 0 0 15px rgba(0, 166, 255, 0.5); }
+            100% { box-shadow: 0 0 10px rgba(0, 166, 255, 0.6), 0 0 0 rgba(0, 166, 255, 0); }
+        }
+
+        /* 關鍵幀動畫：內容淡入並上浮 */
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 關鍵幀動畫：導航列從上方滑入 */
+        @keyframes navSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* 全局樣式 */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 常用字體，無襯線 */
+            font-family: var(--font-main); /* 使用主要字體 */
             line-height: 1.6;
             margin: 0;
-            padding: 20px;
-            background-color: #f4f7f6; /* 淡灰色背景 */
-            color: #333; /* 主要文字顏色 */
-            text-align: center; /* 所有內容居中 */
+            padding: 0;
+            background-color: var(--color-dark-bg);
+            color: var(--color-text-primary);
+            text-align: center;
+            /* 滾動捕捉容器 */
+            scroll-snap-type: y proximity; /* Y軸方向，接近時捕捉 */
+            overflow-y: scroll; /* 允許垂直滾動 */
+            height: 100vh; /* 確保 body 填滿視窗高度 */
         }
 
-        /* 頁首樣式 */
+        /* 容器，限制內容最大寬度並居中 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px; /* 移除上下 padding，由 section 自己控制 */
+        }
+
+        /* 導航列樣式 */
+        nav {
+            background-color: rgba(0, 0, 0, 0.9); /* 更不透明的黑色背景 */
+            padding: 15px 0;
+            border-bottom: 2px solid var(--color-blue-accent);
+            position: fixed; /* 固定在頂部 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+            transform: translateY(-100%); /* 初始隱藏在視窗上方 */
+            transition: transform 0.5s ease-out, opacity 0.5s ease-out; /* 滑入動畫 */
+            opacity: 0; /* 初始透明 */
+        }
+
+        nav.show { /* 通過 JavaScript 添加 'show' 類來顯示導航列 */
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        nav .nav-links {
+            max-width: 800px; /* 限制導航連結寬度 */
+            margin: 0 auto;
+            display: flex; /* 使用 Flexbox 讓連結水平排列 */
+            justify-content: center; /* 水平居中 */
+            gap: 20px; /* 連結間距 */
+        }
+
+        nav a {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            font-size: 1.1em;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+        
+        nav a:hover {
+            background-color: var(--color-blue-accent);
+            color: white;
+            text-decoration: none;
+            transform: scale(1.05); /* 點擊/懸停時輕微放大 */
+        }
+
+        /* 頁首樣式 - 首頁大圖區塊 */
         header {
-            background-color: #2196F3; /* 亮綠色背景 */
-            color: white; /* 文字顏色 */
-            padding: 40px 20px;
-            border-radius: 8px; /* 圓角 */
-            margin-bottom: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+            background-color: #003366;
+            background-image: linear-gradient(135deg, #003366 0%, #0056b3 100%);
+            color: white;
+            padding: 80px 20px 40px; /* 調整 padding */
+            border-radius: 0 0 15px 15px; /* 底部圓角 */
+            margin-bottom: 0; /* 移除 header 和第一個 section 的間距 */
+            box-shadow: 0 8px 25px rgba(0, 166, 255, 0.3); /* 更明顯的藍色光影 */
+            min-height: 80vh; /* 確保至少佔據大部分視窗高度 */
+            display: flex; /* 使用 Flexbox 垂直居中內容 */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            scroll-snap-align: start; /* 滾動捕捉到頂部 */
+            animation: fadeInSlideUp 1.2s ease-out; /* 頁首內容淡入動畫 */
         }
 
-        header img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%; /* 讓圖片變成圓形 */
-            object-fit: cover; /* 確保圖片填充圓形區域 */
-            border: 5px solid white; /* 白色邊框 */
-            margin-bottom: 15px;
+        /* 頁首個人照片 - 矩形樣式 */
+        header .profile-photo-wrapper {
+            width: 300px; /* 照片寬度 */
+            height: 400px; /* 照片高度 */
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden; /* 確保照片不會超出邊界 */
+            border-radius: 10px; /* 輕微圓角 */
+            border: 3px solid var(--color-blue-primary); /* 藍色邊框 */
+            box-shadow: 0 0 20px rgba(0, 166, 255, 0.8); /* 初始光暈 */
+            animation: pulse-glow 3s infinite alternate; /* 應用呼吸光暈動畫 */
+        }
+
+        header .profile-photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 確保照片填充容器且不變形 */
+            display: block; /* 移除圖片底部的空白 */
         }
 
         header h1 {
-            margin: 10px 0;
-            font-size: 2.8em; /* 標題字體大小 */
-            letter-spacing: 1.5px; /* 字距 */
+            margin: 15px 0 5px;
+            font-size: 3.5em; /* 放大標題 */
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 166, 255, 0.5); /* 標題文字光暈 */
         }
 
         header p {
-            font-size: 1.2em;
+            font-size: 1.4em; /* 放大描述文字 */
             opacity: 0.9;
+            color: #C0C0C0;
         }
 
-        /* 區塊樣式 */
+        /* 區塊樣式 - 卡片設計 */
         section {
-            background-color: #ffffff; /* 白色背景 */
-            padding: 30px;
-            margin: 25px auto; /* 區塊上下間距與左右自動居中 */
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
-            max-width: 800px; /* 限制區塊最大寬度 */
-            text-align: left; /* 區塊內文字靠左對齊 */
+            background-color: var(--color-light-bg);
+            padding: 40px; /* 增加 padding */
+            margin: 40px auto; /* 增加區塊間距 */
+            border-radius: 15px; /* 更圓潤的圓角 */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* 更明顯的陰影 */
+            max-width: 800px;
+            text-align: left;
+            transition: transform 0.4s ease, box-shadow 0.4s ease; /* 轉場時間拉長，更平滑 */
+            min-height: 50vh; /* 確保區塊有一定高度 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 垂直居中內容 */
+            scroll-snap-align: start; /* 滾動捕捉到頂部 */
+            opacity: 0; /* 初始隱藏，等待 JS 觸發動畫 */
+            transform: translateY(30px); /* 初始位置略低 */
+        }
+
+        /* 區塊進入視窗時的動畫 */
+        section.animated {
+            animation: fadeInSlideUp 1s ease-out forwards; /* 應用淡入上浮動畫 */
+        }
+        
+        /* 區塊懸停微光效果 */
+        section:hover {
+            transform: translateY(-10px); /* 懸停時明顯抬升 */
+            box-shadow: 0 20px 40px rgba(0, 166, 255, 0.4), 0 0 30px rgba(0, 166, 255, 0.2); /* 懸停時增強藍色光影 */
         }
 
         section h2 {
-            color: #3f51b5; /* 藍色標題 */
-            border-bottom: 2px solid #e0e0e0; /* 底部細線 */
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 2em;
+            color: var(--color-blue-primary);
+            border-bottom: 2px dashed var(--color-blue-accent);
+            padding-bottom: 15px; /* 增加標題底部間距 */
+            margin-bottom: 25px;
+            font-size: 2.5em; /* 放大標題 */
+            text-shadow: 0 0 8px rgba(0, 166, 255, 0.3); /* 標題文字光暈 */
         }
         
         section h3 {
-            color: #607d8b; /* 深灰色標題 */
-            margin-top: 25px;
-            margin-bottom: 10px;
+            font-family: var(--font-code); /* 小標題使用程式碼字體 */
+            color: var(--color-text-secondary);
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-left: 5px solid var(--color-blue-primary);
+            padding-left: 15px;
         }
 
-        /* 列表樣式 */
+        /* 列表樣式 - 技能/特點 */
         ul {
-            list-style-type: none; /* 移除預設點點 */
+            list-style-type: none;
             padding: 0;
             margin: 0;
         }
 
         ul li {
-            background-color: #e8f5e9; /* 淺綠色背景 */
-            margin-bottom: 8px;
-            padding: 10px 15px;
-            border-left: 5px solid #66bb6a; /* 左側綠色邊條 */
-            border-radius: 4px;
-            color: #333;
+            background-color: #252525;
+            margin-bottom: 12px; /* 增加列表項間距 */
+            padding: 15px 25px;
+            border-radius: 8px;
+            color: var(--color-text-primary);
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            text-align: left;
         }
 
-        /* 按鈕樣式 */
-        button {
-            background-color: #f44336; /* 紅色按鈕 */
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1.1em;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease; /* 平滑過渡效果 */
-            margin-top: 20px;
+        ul li:hover {
+            background-color: #333333;
+            transform: scale(1.02);
+            box-shadow: 0 0 10px rgba(0, 166, 255, 0.2); /* 列表項懸停光暈 */
+        }
+        
+        ul li::before {
+            content: '›';
+            font-family: var(--font-code); /* 列表符號使用程式碼字體 */
+            color: var(--color-blue-primary);
+            font-weight: bold;
+            font-size: 1.8em;
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            line-height: 1; /* 調整行高讓符號居中 */
+        }
+        
+        ul li {
+            padding-left: 40px; /* 騰出空間給偽元素 */
         }
 
-        button:hover {
-            background-color: #d32f2f; /* 滑鼠懸停時變深 */
+        /* 生活照片區塊樣式 */
+        .gallery-grid {
+            display: grid; /* 使用 Grid 佈局 */
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* 自動調整列數 */
+            gap: 20px; /* 圖片間距 */
+            margin-top: 30px;
+        }
+
+        .gallery-item {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05); /* 懸停放大 */
+            box-shadow: 0 8px 15px rgba(0, 166, 255, 0.3); /* 藍色光影 */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 200px; /* 固定圖片高度 */
+            object-fit: cover; /* 確保圖片填充且不變形 */
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1); /* 懸停時圖片放大 */
+        }
+
+        .gallery-item-caption {
+            padding: 15px;
+            font-size: 0.9em;
+            color: var(--color-text-secondary);
         }
 
         /* 連結樣式 */
         a {
-            color: #2196F3; /* 藍色連結 */
-            text-decoration: none; /* 移除底線 */
+            color: var(--color-blue-primary);
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
 
         a:hover {
-            text-decoration: underline; /* 滑鼠懸停時顯示底線 */
+            color: white;
+            text-decoration: underline;
         }
 
         /* 頁腳樣式 */
         footer {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #333; /* 深灰色背景 */
-            color: #ddd; /* 淺灰色文字 */
-            border-radius: 8px;
-            font-size: 0.9em;
+            margin-top: 50px;
+            padding: 25px;
+            background-color: #000000;
+            color: var(--color-text-secondary);
+            border-radius: 8px 8px 0 0; /* 頂部圓角 */
+            font-size: 0.95em;
+            border-top: 2px solid var(--color-blue-accent);
+            animation: fadeInSlideUp 1s ease-out 0.4s backwards; /* 頁腳淡入動畫 */
         }
     </style>
 </head>
 <body>
-    <header>
-        <img src="myphoto.jpg" alt="你的個人照片" width="150" height="150">
-        <h1>林彥碩</h1>
-        <p>國立臺灣師範大學 科技系 學生</p>
-    </header>
-
-    <hr style="border: none; border-top: 1px solid #eee; width: 60%; margin: 30px auto;">
-
-    <section id="about">
-        <h2>關於我</h2>
-        <p>在這裡寫下你的自我介紹、興趣、熱情或個人故事。試著讓內容更生動有趣。</p>
-        <p>例如：我熱愛網頁設計，擅長將複雜的想法轉化為簡潔且流暢的網頁介面。對我來說，設計不只是一門技術，更是解決問題的藝術。</p>
+    <div class="container">
+        <header>
+            <div class="profile-photo-wrapper">
+                <img src="images/mainphoto.jpg" alt=""> </div>
+            <h1>林彥碩</h1>
+            <p>國立臺灣師範大學 科技系 學生</p>
+        </header>
+    
+        <nav id="mainNav">
+            <div class="nav-links">
+                <a href="#about">關於我</a>
+                <a href="#specialties">我的特色</a>
+                <a href="#photos">生活照片</a>
+                <a href="#contact">聯絡我</a>
+            </div>
+        </nav>
         
-        <h3>我的專業技能</h3>
-        <ul>
-            <li>技能一：HTML5 / CSS3 / JavaScript</li>
-            <li>技能二：Figma / Adobe XD</li>
-            <li>技能三：...(其他技能)</li>
-        </ul>
+        <section id="about">
+            <h2>關於我</h2>
+            <p>我是林彥碩，就讀於國立臺灣師範大學科技系。個人興趣是在家裡玩遊戲或與偶爾與家人朋友出門踏青或逛街。</p>
+            
+            <h3>我的經歷</h3>
+            <ul>
+                <li>熟悉高中以下數學，也在高中數學補習班中教學，對有趣的數學充滿興趣。</li>
+                <li>在高中的暑期課程中和組員一起用arduino製作，自動抽衛生紙機器人。</li>
+                <li>在高二時製作關於肥料如何影響植物生長的小論文，也在小論文比賽中得到了甲等。</li>
+                <li>目前在大學認真學習本科系外，也在努力雙主修電機。</li>
+            </ul>
+        </section>
+    
+        <section id="specialties">
+            <h2>我的特色</h2>
+            <p>努力學習不同領域的知識，讓我可以順應這個世代：</p>
+            
+            <h3>個人特質</h3>
+            <ul>
+                <li>熱情但我很內向，在必要的場合才會拿出我的勇氣聊天。</li>
+                <li>讀書認真，對待自己的課業相當認真。</li>
+                <li>對喜歡的事物會認真專研，也會去找到問題的解答。</li>
+                <li>有團隊能力，在高中做各種報告都是身為組長，帶領組員完成工作。</li>
+            </ul>
+        </section>
 
-        <a href="你的作品集網址" target="_blank">
-            <button>我的作品集</button>
-        </a>
-    </section>
+        <section id="photos">
+            <h2>生活照片</h2>
+            <p>偶爾也會藉由照片記錄生活。</p>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="images/photodog1.jpg" alt="生活照片 1"> <div class="gallery-item-caption">家犬</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo2.jpg" alt="生活照片 2"> <div class="gallery-item-caption">戶外踏青</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo3.jpg" alt="生活照片 3"> <div class="gallery-item-caption">生活照</div>
+                </div>
+                <div class="gallery-item">
+                    <img src="images/photo4.jpg" alt="生活照片 4"> <div class="gallery-item-caption">看海</div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact">
+            <h2>聯絡我</h2>
+            <p>歡迎隨時透過以下方式與我聯繫！</p>
+            <ul>
+                <li>Email: <a href="mailto:413711114h@gapps.ntnu.edu.tw">413711114h@gapps.ntnu.edu.tw</a></li>
+                <li>LinkedIn: <a href="https://www.linkedin.com/feed/?trk=guest_homepage-basic_google-one-tap-submit" target="_blank">我的 LinkedIn 個人頁面</a></li>
+                <li>GitHub: <a href="https://github.com/LinYenShou" target="_blank">LinYenShou 的 GitHub 程式碼庫</a></li>
+            </ul>
+        </section>
+    
+        <footer>
+            <p>編碼於 2025 | Powered by LinYenShou | 版權所有 &copy; 2025</p>
+        </footer>
+    </div>
 
-    <hr style="border: none; border-top: 1px solid #eee; width: 60%; margin: 30px auto;">
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const nav = document.getElementById('mainNav');
+            let lastScrollY = window.scrollY; // 記錄上一次捲動位置
 
-    <section id="contact">
-        <h2>聯絡我</h2>
-        <p>歡迎透過以下方式與我聯繫！</p>
-        <ul>
-            <li>Email: <a href="mailto:413711114h@gapps.ntnu.edu.tw">你的Email@example.com</a></li>
-            <li>LinkedIn: <a href="你的LinkedIn網址" target="_blank">你的 LinkedIn</a></li>
-            <li>GitHub: <a href="https://github.com/LinYenShou" target="_blank">你的 GitHub</a></li>
-        </ul>
-    </section>
+            const observerOptions = {
+                root: null, // 視窗為根元素
+                rootMargin: '0px',
+                threshold: 0.1 // 區塊有 10% 進入視窗時觸發
+            };
 
-    <hr style="border: none; border-top: 1px solid #eee; width: 60%; margin: 30px auto;">
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated'); // 加入動畫類別
+                        // observer.unobserve(entry.target); // 如果只需動畫一次，可以取消觀察
+                    } else {
+                        // 如果區塊離開視窗，可以移除 animated 類別，以便下次進入時再次動畫
+                        entry.target.classList.remove('animated');
+                    }
+                });
+            }, observerOptions);
 
-    <footer>
-        <p>&copy; 2025 個人網站. All Rights Reserved.</p>
-    </footer>
+            sections.forEach(section => {
+                observer.observe(section); // 觀察每個 section
+            });
 
+            // 控制導航列的顯示/隱藏
+            window.addEventListener('scroll', () => {
+                // 如果是首頁 (header) 正在顯示，則隱藏導航列
+                const header = document.querySelector('header');
+                const headerRect = header.getBoundingClientRect();
+
+                if (headerRect.bottom > 100) { // 當 header 大部分在視窗中時
+                    nav.classList.remove('show');
+                } else {
+                    nav.classList.add('show');
+                }
+
+                lastScrollY = window.scrollY;
+            });
+
+            // 初始載入時檢查導航列狀態
+            window.dispatchEvent(new Event('scroll'));
+        });
+    </script>
 </body>
 </html>
