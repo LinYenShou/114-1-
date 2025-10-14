@@ -4,5 +4,6 @@
 系級：科技系二年級  
 課程筆記區、作業連結區、專題連結區  
 [HW1](https://linyenshou.github.io/114-1-/) 個人網站    
-[HW2-1](https://youtu.be/IhnazWhho3k) Taipei Dashboard連結影片  
-[HW2-2]()  
+[HW2](https://youtu.be/IhnazWhho3k) Taipei Dashboard連結影片  
+[index](https://github.com/LinYenShou/114-1-/blob/main/index.tsx)  修改顏色 增加圖表  
+[AItest](https://github.com/LinYenShou/114-1-/blob/main/AItest.tsx) 增加內容 新增預設選項  
